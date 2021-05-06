@@ -167,8 +167,8 @@ def convert(input_file, output_file):
         df_segmental_stress, 
         df_segmental_edema_lv, 
         df_segmental_edema_rv], axis=1)
-    final_df.replace({'null': pd.NA})
-    final_df.to_csv('test1.csv', index=False)
+    final_df.replace({'null': pd.NA}, inplace=True)
+    final_df.to_csv(output_file, index=False)
     print('CSV Exported.')
     print('Conversion Completed.')
 
