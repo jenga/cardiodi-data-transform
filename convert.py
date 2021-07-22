@@ -112,6 +112,7 @@ def convert(input_file, output_file):
         'DiagnosticReport.AssistingReaders',
         'DiagnosticReport.OverallImpressions'
     ]
+    df_patient['Patient.UID'] = df_patient['PatientFile.ID'].apply(lambda p: str(p[:8]))
     df_segmental_function_lv.columns = ['SegmentalFunction.LV.{}'.format(s) for s in range(1,18)]
     df_segmental_function_rv.columns = ['SegmentalFunction.RV.{}'.format(s) for s in range(1,13)]
     df_segmental_fibrosis_lv.columns = ['SegmentalFibrosis.LV.{}'.format(s) for s in range(1,18)]
