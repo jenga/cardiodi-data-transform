@@ -7,6 +7,10 @@ import click
 
 tqdm.pandas()
 
+@click.group()
+def main():
+    pass
+
 def read_data(input_file):
     return pd.read_csv(input_file, 
                  header=None,
@@ -64,7 +68,7 @@ def boolean_df(item_lists, unique_items):
     # Return the results as a dataframe
     return pd.DataFrame(bool_dict)
 
-@click.command()
+@main.command()
 @click.option('--input_file')
 @click.option('--output_file')
 def convert(input_file, output_file):
@@ -173,5 +177,17 @@ def convert(input_file, output_file):
     print('CSV Exported.')
     print('Conversion Completed.')
 
+@main.command()
+@click.option('--converted_output')
+@click.option('--billing_file')
+@click.option('--output_file')
+def join_billing(converted_output, billing_file, output_file):
+    df_converted = pd.read_csv(converted_output)
+    df_billing = pd.read_csv(billing_file)
+    final_df = pd.merge(df_converted, df_billing, left_on="Procedure.Number", right_on="procedure_number")
+    final_df.to_csv(output_file, index=False)
+    print('CSV Exported')
+    print('Join Completed')
+
 if __name__ == '__main__':
-    convert()
+    main()
